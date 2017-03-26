@@ -70,8 +70,28 @@ for name,model in models:
      kfold = model_selection.KFold(n_splits = 10, random_state = seed)
      cv_results = model_selection.cross_val_score(model, X_train, Y_train, cv=kfold, scoring = scoring)
      #print(cv_results.shape)
-     print(cv_results)
+     #print(cv_results)
      results.append(cv_results)
      names.append(name)
      msg = "%s: %f (%f)" % (name, cv_results.mean(), cv_results.std())
      print(msg)
+
+
+
+###comparing the clgorithms using boxplot
+##fig = plt.figure()
+##fig.suptitle('Algorithm comparism')
+##ax = fig.add_subplot(111)
+##plt.boxplot(results,0,'gD')
+##ax.set_xticklabels(names)
+##plt.show()
+
+
+# Make predictions on validation dataset
+knn = KNeighborsClassifier()
+knn.fit(X_train, Y_train)
+predictions = knn.predict(X_validation)
+print(Y_validation);
+#print(accuracy_score(Y_validation, predictions))
+print(confusion_matrix(Y_validation, predictions,['Iris-setosa' 'Iris-versicolor' 'Iris-virginica']))
+#print(classification_report(Y_validation, predictions))
